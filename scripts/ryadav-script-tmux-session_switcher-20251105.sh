@@ -25,7 +25,7 @@ fi
 picker=(fzf --layout=reverse
   --prompt='session> '
   --header='Select a tmux session'
-  --with-nth=2..
+  --with-nth=2.. --tiebreak=index
   --preview-window=right,30%
   --preview 'tmux list-windows -t {2} -F "#{window_index}: #{window_name} (#{window_panes} panes)"')
 
