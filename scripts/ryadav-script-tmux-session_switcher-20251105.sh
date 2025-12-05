@@ -25,13 +25,15 @@ fi
 picker=(fzf --layout=reverse
   --prompt='session> '
   --header='Select a tmux session'
-  --with-nth=2.. --tiebreak=index
+  --with-nth=2..
+  --tiebreak=index
   --preview-window=right,30%
-  --preview 'tmux list-windows -t {2} -F "#{window_index}: #{window_name} (#{window_panes} panes)"')
+  --preview 'tmux list-windows -t {2} -F "#{window_index}: #{window_name} (#{window_panes} panes)"') || exit 0
 
 # *** ask user to select the session
 selection="$(tmux list-sessions -F "$format" | sort -rn | "${picker[@]}")" || exit 0
 [ -n "$selection" ] || exit 0
+# tmux display-message "Here is you selection string : ${selection}"
 
 # *** parse the return string which may have other elements in it
 # we just need the session name
@@ -43,5 +45,5 @@ _session_name=${session_part%%$' '*}
 IFS=' ' read -r session_name _ <<<"$_session_name"
 
 # tmux display-message "Here is you session name : ${session_name}"
-# *** once session is selected then switch to that session
 tmux switch-client -t "${session_name}"
+# *** once session is selected then switch to that session
