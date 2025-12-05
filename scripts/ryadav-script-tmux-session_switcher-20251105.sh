@@ -13,7 +13,7 @@ set -euo pipefail
 
 # *** get the session names
 # format='#{session_name}  [windows: #{session_windows}] [#{?session_attached,attached,detached}]'
-format='#{session_last_attached} #{session_name} [windows: #{session_windows}] [#{?session_attached,attached,detached}]'
+format='#{?session_last_attached,#{session_last_attached},0} #{session_name} [windows: #{session_windows}] [#{?session_attached,attached,detached}]'
 
 # *** show the picker window
 if ! command -v fzf >/dev/null 2>&1; then
